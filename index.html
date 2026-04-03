@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hyun's Premium Archive</title>
     
-    <!-- React & Babel (JSX Parser) -->
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Frameworks & Libraries -->
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    
-    <!-- Design Engines (Tailwind CSS & Lucide Icons) -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -24,11 +22,9 @@
             -webkit-font-smoothing: antialiased;
         }
         
-        /* 스크롤바 숨기기 */
         .no-scrollbar::-webkit-scrollbar { display: none; }
         .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-        /* 카드 스냅 설정 */
         .snap-x {
             scroll-snap-type: x mandatory;
             scroll-behavior: smooth;
@@ -36,12 +32,20 @@
         .snap-center {
             scroll-snap-align: center;
         }
+
+        /* 부드러운 등장 애니메이션 */
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <!-- React 코드가 브라우저에서 직접 실행됨 -->
     <script type="text/babel">
         const { useState, useEffect } = React;
 
@@ -54,85 +58,182 @@
                 }
             }, [isMenuOpen]);
 
-            const posts = [
-                { id: 1, tag: 'Fitness', title: 'SBD 1RM Strength Level Calculator', desc: '데이터 기반 스트렝스 분석 도구 v1.0 설계 기록.', date: 'APR 03', color: '#00704A' },
-                { id: 2, tag: 'Study', title: 'Cell Biology: ATP Synthesis Process', desc: '캠벨 생명과학 핵심 요약 아카이브 v2.', date: 'APR 01', color: '#1D4ED8' },
-                { id: 3, tag: 'Photo', title: 'Fujifilm X-T5 Classic Negative Recipe', desc: '봄날의 감성을 담은 필름 시뮬레이션 설정값.', date: 'MAR 28', color: '#B45309' }
+            const featuredPosts = [
+                { id: 1, tag: 'Fitness', title: 'SBD 1RM Strength Level Calculator', desc: '데이터 기반 스트렝스 분석 도구 v1.0.', date: 'APR 03', color: '#00704A' },
+                { id: 2, tag: 'Study', title: 'Cell Biology: ATP Synthesis Process', desc: '캠벨 생명과학 핵심 요약 아카이브.', date: 'APR 01', color: '#1D4ED8' },
+                { id: 3, tag: 'Photo', title: 'Fujifilm X-T5 Classic Negative Recipe', desc: '봄날의 감성을 담은 필름 시뮬레이션.', date: 'MAR 28', color: '#B45309' }
             ];
 
             return (
-                <div className="min-h-screen text-left">
-                    {/* 상단 헤더 */}
+                <div className="min-h-screen text-left fade-in">
+                    {/* [1] Navigation Header */}
                     <header className="sticky top-0 z-50 w-full bg-[#00704A] h-16 flex items-center justify-between px-6 shadow-xl text-white">
-                        <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-3 cursor-pointer">
                             <div className="w-9 h-9 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
                                 <i data-lucide="bookmark" className="w-5 h-5 text-white"></i>
                             </div>
                             <h1 className="text-sm font-black uppercase italic tracking-[0.2em]">Hyun's Archive</h1>
                         </div>
-                        <div className="flex items-center gap-4">
-                            <button onClick={() => setIsMenuOpen(true)} className="p-2 hover:bg-white/10 rounded-full transition-all text-white">
+                        <div className="flex items-center gap-2 md:gap-4">
+                            <nav className="hidden md:flex items-center gap-6 text-[10px] font-black uppercase tracking-widest mr-4">
+                                <a href="#" className="hover:text-gray-300 transition-colors">Home</a>
+                                <a href="#" className="hover:text-gray-300 transition-colors">Dashboard</a>
+                                <a href="#" className="hover:text-gray-300 transition-colors">Documents</a>
+                            </nav>
+                            <button onClick={() => setIsMenuOpen(true)} className="p-2 hover:bg-white/10 rounded-full transition-all">
                                 <i data-lucide="menu" className="w-6 h-6"></i>
                             </button>
                         </div>
                     </header>
 
-                    {/* 메인 레이아웃 */}
                     <main className="max-w-5xl mx-auto pb-24 px-8">
-                        <section className="pt-20 pb-12">
+                        {/* [2] Hero Section */}
+                        <section className="pt-20 pb-16 border-b border-gray-200/50">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="h-[3px] w-10 bg-[#00704A]"></div>
-                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00704A]">Dashboard</span>
+                                <span className="text-[11px] font-black uppercase tracking-[0.4em] text-[#00704A]">Operational Center</span>
                             </div>
-                            <h2 className="text-5xl md:text-6xl font-black tracking-tighter leading-[1.05] mb-6 text-[#2D2926]">
+                            <h2 className="text-5xl md:text-7xl font-black tracking-tighter leading-[1.0] mb-8 text-[#2D2926]">
                                 Record Everything.<br />
-                                <span className="text-[#00704A]">Analyze Efficiently.</span>
+                                <span className="text-[#00704A]">Analyze Properly.</span>
                             </h2>
+                            <p className="text-sm md:text-lg font-medium text-gray-400 max-w-xl leading-relaxed">
+                                운동 기록부터 학술적 정리까지, 모든 데이터를 정교하게 아카이빙하고 시각화하는 개인용 통제 센터입니다.
+                            </p>
                         </section>
 
-                        {/* 리액트 가로 스크롤 카드 리스트 */}
-                        <section className="py-8">
+                        {/* [3] Featured Section (Horizontal Scroll) */}
+                        <section className="py-16">
+                            <div className="flex justify-between items-end mb-8">
+                                <div>
+                                    <h3 className="text-2xl font-black tracking-tight text-[#2D2926]">주요 아카이브</h3>
+                                    <div className="w-12 h-1 bg-[#00704A] mt-2"></div>
+                                </div>
+                                <span className="text-[10px] font-black text-gray-300 uppercase tracking-widest">Swipe for more</span>
+                            </div>
+                            
                             <div className="flex overflow-x-auto no-scrollbar gap-6 py-4 snap-x snap-mandatory">
-                                {posts.map(post => (
-                                    <div key={post.id} className="flex-shrink-0 w-[80vw] md:w-[400px] snap-center">
-                                        <div className="bg-white rounded-[40px] p-10 h-[280px] flex flex-col justify-between border border-[#EAE9E0] shadow-sm hover:shadow-xl transition-all group">
+                                {featuredPosts.map(post => (
+                                    <div key={post.id} className="flex-shrink-0 w-[85vw] md:w-[420px] snap-center">
+                                        <div className="bg-white rounded-[40px] p-10 h-[300px] flex flex-col justify-between border border-[#EAE9E0] shadow-[0_10px_30px_-15px_rgba(0,0,0,0.05)] hover:shadow-xl transition-all group cursor-pointer">
                                             <div>
                                                 <div className="flex justify-between items-center mb-6">
                                                     <span className="text-[10px] font-black uppercase tracking-widest px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: post.color }}>
                                                         {post.tag}
                                                     </span>
-                                                    <span className="text-[11px] font-bold text-gray-300 italic">{post.date}</span>
+                                                    <span className="text-[11px] font-bold text-gray-300 tracking-widest italic">{post.date}</span>
                                                 </div>
-                                                <h4 className="text-xl font-black text-[#2D2926] group-hover:text-[#00704A] transition-colors">{post.title}</h4>
-                                                <p className="text-sm text-gray-400 mt-2 line-clamp-2">{post.desc}</p>
+                                                <h4 className="text-2xl font-black leading-tight text-[#2D2926] group-hover:text-[#00704A] transition-colors">{post.title}</h4>
+                                                <p className="text-sm text-gray-400 mt-3 font-medium leading-relaxed">{post.desc}</p>
                                             </div>
-                                            <div className="flex items-center justify-between pt-6 border-t border-gray-50 text-[#00704A]">
-                                                <span className="text-[11px] font-black uppercase">Inspect Data</span>
-                                                <i data-lucide="arrow-right" className="w-5 h-5"></i>
+                                            <div className="flex items-center justify-between pt-6 border-t border-gray-50">
+                                                <span className="text-[11px] font-black text-[#00704A] tracking-tighter uppercase">Inspection Data</span>
+                                                <div className="w-10 h-10 rounded-full bg-[#F9F8F3] flex items-center justify-center text-[#00704A] group-hover:bg-[#00704A] group-hover:text-white transition-all">
+                                                    <i data-lucide="arrow-right" className="w-4 h-4"></i>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
                         </section>
+
+                        {/* [4] Status & Widgets Grid Section */}
+                        <section className="py-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                            {/* Widget 1: Total Logs */}
+                            <div className="md:col-span-1 bg-white p-8 rounded-[40px] border border-gray-100 shadow-sm flex flex-col justify-between h-[220px]">
+                                <div className="flex justify-between items-start">
+                                    <div className="w-12 h-12 rounded-2xl bg-[#00704A]/5 flex items-center justify-center">
+                                        <i data-lucide="activity" className="text-[#00704A] w-6 h-6"></i>
+                                    </div>
+                                    <span className="text-[10px] font-black text-green-500">+12% Today</span>
+                                </div>
+                                <div>
+                                    <p className="text-[11px] font-black text-gray-300 uppercase tracking-widest mb-1">Total Records</p>
+                                    <p className="text-5xl font-black text-[#2D2926]">2,842</p>
+                                </div>
+                            </div>
+
+                            {/* Widget 2: Status Monitor */}
+                            <div className="md:col-span-2 bg-[#2D2926] p-8 rounded-[40px] text-white flex flex-col justify-between h-[220px] relative overflow-hidden">
+                                <div className="relative z-10">
+                                    <h4 className="text-xl font-bold mb-2 italic">System Operational.</h4>
+                                    <p className="text-gray-400 text-sm max-w-xs leading-relaxed">모든 데이터베이스가 클라우드와 정상적으로 동기화되고 있습니다.</p>
+                                </div>
+                                <div className="relative z-10 flex gap-4">
+                                    <div className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black border border-white/10 tracking-widest">SERVER: OK</div>
+                                    <div className="px-4 py-2 bg-white/10 rounded-full text-[10px] font-black border border-white/10 tracking-widest">SYNC: 100%</div>
+                                </div>
+                                {/* Decorative background element */}
+                                <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-[#00704A] rounded-full blur-[80px] opacity-40"></div>
+                            </div>
+                        </section>
+
+                        {/* [5] Categorized Section */}
+                        <section className="py-16">
+                            <div className="flex items-center gap-3 mb-10 text-gray-400 uppercase font-black tracking-widest text-[11px]">
+                                <p>Detailed Navigation</p>
+                                <div className="flex-1 h-[1px] bg-gray-200"></div>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {[
+                                    { name: 'Fitness Management', icon: 'dumbbell', count: '142 Logs', color: 'bg-green-50' },
+                                    { name: 'Academic Library', icon: 'book-open', count: '89 Papers', color: 'bg-blue-50' },
+                                    { name: 'Media Archive', icon: 'camera', count: '1,024 Files', color: 'bg-orange-50' },
+                                    { name: 'Personal Settings', icon: 'settings', count: 'Config', color: 'bg-gray-100' }
+                                ].map((cat, i) => (
+                                    <div key={i} className="group bg-white p-6 rounded-[30px] border border-gray-100 flex items-center justify-between hover:border-[#00704A] transition-all cursor-pointer shadow-sm">
+                                        <div className="flex items-center gap-6 text-left">
+                                            <div className={`w-14 h-14 rounded-2xl ${cat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+                                                <i data-lucide={cat.icon} className="text-[#2D2926] w-6 h-6"></i>
+                                            </div>
+                                            <div>
+                                                <p className="text-lg font-black text-[#2D2926]">{cat.name}</p>
+                                                <p className="text-[11px] font-bold text-gray-300 uppercase tracking-widest">{cat.count}</p>
+                                            </div>
+                                        </div>
+                                        <i data-lucide="chevron-right" className="w-5 h-5 text-gray-200 group-hover:text-[#00704A] transition-all"></i>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
                     </main>
 
-                    {/* 사이드바 오버레이 */}
+                    {/* [6] Sidebar Overlay */}
                     <div className={`fixed inset-0 z-[100] transition-all duration-500 ${isMenuOpen ? 'visible' : 'invisible'}`}>
-                        <div className={`absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)}></div>
-                        <div className={`absolute top-0 right-0 h-full w-72 bg-white shadow-2xl transition-transform duration-500 ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
-                            <div className="p-10 flex flex-col h-full text-left">
-                                <button onClick={() => setIsMenuOpen(false)} className="self-end mb-12 p-2">
-                                    <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>
-                                </button>
-                                <nav className="space-y-6 text-lg font-bold text-gray-400">
-                                    {['Home', 'Fitness', 'Study', 'Photo'].map(item => (
-                                        <div key={item} className="hover:text-[#00704A] cursor-pointer transition-colors border-b border-gray-50 pb-2">{item}</div>
+                        <div className={`absolute inset-0 bg-black/40 backdrop-blur-md transition-opacity duration-500 ${isMenuOpen ? 'opacity-100' : 'opacity-0'}`} onClick={() => setIsMenuOpen(false)}></div>
+                        <div className={`absolute top-0 right-0 h-full w-[320px] bg-white shadow-2xl transition-transform duration-500 ease-[cubic-bezier(0.23,1,0.32,1)] ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}>
+                            <div className="p-12 flex flex-col h-full text-left">
+                                <div className="flex justify-between items-center mb-20 text-left">
+                                    <span className="text-[10px] font-black tracking-[0.4em] uppercase text-[#00704A]">Categories</span>
+                                    <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-50 rounded-full transition-all">
+                                        <i data-lucide="x" className="w-6 h-6 text-gray-400"></i>
+                                    </button>
+                                </div>
+                                <nav className="flex-1 space-y-8">
+                                    {['Dashboard Home', 'Fitness Analysis', 'Study Notes', 'Photo Gallery', 'System Admin'].map(name => (
+                                        <div key={name} className="text-xl font-black text-gray-300 hover:text-[#00704A] cursor-pointer transition-colors relative group">
+                                            {name}
+                                            <span className="absolute -left-4 top-1/2 -translate-y-1/2 w-1 h-0 bg-[#00704A] group-hover:h-6 transition-all"></span>
+                                        </div>
                                     ))}
                                 </nav>
+                                <div className="pt-12 border-t border-gray-100 flex items-center gap-4">
+                                    <div className="w-12 h-12 rounded-full bg-[#00704A] flex items-center justify-center text-white font-black italic shadow-lg text-xl">H</div>
+                                    <div>
+                                        <p className="text-sm font-bold text-[#2D2926]">Hyun Admin</p>
+                                        <p className="text-[10px] text-green-500 font-black uppercase tracking-widest leading-none">System Online</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    {/* Footer */}
+                    <footer className="py-24 text-center opacity-30 border-t border-gray-200 mx-10">
+                        <p className="text-[11px] font-black uppercase tracking-[0.8em] text-[#2D2926]">Hyun Core Archive © 2026</p>
+                    </footer>
                 </div>
             );
         };
