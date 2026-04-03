@@ -1,11 +1,290 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>My Serverless Site</title>
-</head>
-<body>
-    <h1>Hello, GitHub Pages!</h1>
-    <p>서버리스 페이지가 정상적으로 배포되었습니다.</p>
-</body>
-</html>
+import React, { useState, useRef, useEffect } from 'react';
+import { Search, Menu, ChevronRight, BookOpen, Image as ImageIcon, Calculator, Zap, Clock, Bookmark, Activity, Star, X, Hash } from 'lucide-react';
+
+// --- 1. Constants & Theme ---
+const COLORS = {
+  primary: '#00704A',    // Starbucks Green
+  background: '#FDFCF7', // Warmer Ivory
+  surface: '#FFFFFF',    // White Card
+  textPrimary: '#1A1A1A',// Deep Charcoal
+  textSecondary: '#6B7280', // Slate Gray
+  border: '#F1F1E6',     // Soft Border
+};
+
+const MOCK_POSTS = [
+  {
+    id: '1',
+    category: 'Fitness',
+    title: 'SBD 스트렝스 레벨 계산기 v1.0',
+    excerpt: '객체지향적으로 설계된 첫 번째 아카이브 도구입니다.',
+    date: '04.03',
+    icon: <Calculator size={16} />,
+    color: '#00704A'
+  },
+  {
+    id: '2',
+    category: 'Study',
+    title: '세포 생물학: ATP 합성 과정',
+    excerpt: '미토콘드리아 내막 전자 전달계 요약본.',
+    date: '04.01',
+    icon: <BookOpen size={16} />,
+    color: '#1D4ED8'
+  },
+  {
+    id: '3',
+    category: 'Photo',
+    title: 'Fujifilm X-T5: 봄날의 기록',
+    excerpt: '클래식 네거티브 시뮬레이션 산책 기록.',
+    date: '03.28',
+    icon: <ImageIcon size={16} />,
+    color: '#B45309'
+  },
+  {
+    id: '4',
+    category: 'General',
+    title: '아카이브 시스템 설계 원칙',
+    excerpt: '확장 가능한 객체지향 UI 구조에 대하여.',
+    date: '03.25',
+    icon: <Zap size={16} />,
+    color: '#6366f1'
+  },
+];
+
+const CATEGORIES = [
+  { name: '전체', icon: <Hash size={18} /> },
+  { name: 'Fitness', icon: <Activity size={18} /> },
+  { name: 'Study', icon: <BookOpen size={18} /> },
+  { name: 'Photo', icon: <ImageIcon size={18} /> },
+  { name: 'General', icon: <Zap size={18} /> },
+];
+
+// --- 2. Components ---
+
+// 사이드바 메뉴 (카테고리 태그 페이지)
+const Sidebar = ({ isOpen, onClose, activeCategory, onCategorySelect }) => {
+  return (
+    <>
+      {/* Overlay */}
+      <div 
+        className={`fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        onClick={onClose}
+      />
+      {/* Drawer */}
+      <div 
+        className={`fixed top-0 left-0 z-[70] h-full w-[280px] bg-[#FDFCF7] shadow-2xl transition-transform duration-500 ease-out transform ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}
+      >
+        <div className="p-8">
+          <div className="flex justify-between items-center mb-10">
+            <h2 className="text-xl font-black text-[#00704A] italic">CATEGORIES</h2>
+            <button onClick={onClose} className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-400">
+              <X size={24} />
+            </button>
+          </div>
+          
+          <nav className="space-y-2">
+            {CATEGORIES.map((cat) => (
+              <button
+                key={cat.name}
+                onClick={() => {
+                  onCategorySelect(cat.name);
+                  onClose();
+                }}
+                className={`w-full flex items-center justify-between px-5 py-4 rounded-2xl font-bold text-sm transition-all ${
+                  activeCategory === cat.name 
+                    ? 'bg-[#00704A] text-white shadow-lg translate-x-2' 
+                    : 'text-slate-500 hover:bg-white hover:text-[#00704A]'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {cat.icon}
+                  {cat.name}
+                </div>
+                <ChevronRight size={16} className={activeCategory === cat.name ? 'opacity-100' : 'opacity-0'} />
+              </button>
+            ))}
+          </nav>
+
+          <div className="absolute bottom-10 left-8 right-8 p-6 bg-white rounded-3xl border border-gray-100 shadow-sm">
+            <p className="text-[10px] font-black text-gray-300 uppercase tracking-widest mb-2">My Profile</p>
+            <p className="text-sm font-bold text-slate-800 tracking-tight">Hyun's Records</p>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
+
+const Header = ({ onHomeClick, onMenuClick }) => (
+  <header 
+    className="sticky top-0 z-50 w-full px-6 h-20 flex items-center justify-between shadow-sm"
+    style={{ backgroundColor: COLORS.primary, color: 'white' }}
+  >
+    <div className="flex flex-col items-start cursor-pointer" onClick={onHomeClick}>
+      <span className="text-[10px] font-bold tracking-[0.3em] uppercase opacity-70 mb-0.5">Archive</span>
+      <h1 className="text-xl font-black tracking-tighter italic uppercase leading-none">
+        Hyun's Archive
+      </h1>
+    </div>
+    <div className="flex gap-2">
+      <div className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer"><Search size={22} /></div>
+      <div className="p-2 hover:bg-white/10 rounded-full transition-colors cursor-pointer" onClick={onMenuClick}>
+        <Menu size={22} />
+      </div>
+    </div>
+  </header>
+);
+
+const HorizontalPostCard = ({ post }) => (
+  <article 
+    className="flex-shrink-0 w-[280px] snap-start bg-white rounded-3xl p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-50 flex flex-col justify-between transition-transform active:scale-95"
+  >
+    <div>
+      <div className="flex justify-between items-center mb-4">
+        <div 
+          className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider"
+          style={{ backgroundColor: `${post.color}12`, color: post.color }}
+        >
+          {post.icon}
+          {post.category}
+        </div>
+        <span className="text-[10px] font-bold text-gray-300">{post.date}</span>
+      </div>
+      <h3 className="text-lg font-extrabold mb-2 leading-tight text-slate-800 line-clamp-2">
+        {post.title}
+      </h3>
+      <p className="text-[12px] text-gray-500 line-clamp-2 leading-relaxed font-medium">
+        {post.excerpt}
+      </p>
+    </div>
+    <button className="mt-6 flex items-center gap-1 text-[11px] font-black text-[#00704A] self-end">
+      VIEW <ChevronRight size={14} />
+    </button>
+  </article>
+);
+
+const SectionHeader = ({ title, subtitle, showScrollHint = false }) => (
+  <div className="px-6 mb-4 flex justify-between items-end">
+    <div>
+      <h2 className="text-xl font-black text-slate-900 leading-none">{title}</h2>
+      {subtitle && <p className="text-[11px] font-bold text-gray-400 mt-1.5 uppercase tracking-wider">{subtitle}</p>}
+    </div>
+    {showScrollHint && (
+      <div className="flex gap-1.5 items-center text-gray-300">
+         <div className="w-1.5 h-1.5 rounded-full bg-[#00704A]"></div>
+         <div className="w-1.5 h-1.5 rounded-full bg-gray-200"></div>
+         <div className="w-1.5 h-1.5 rounded-full bg-gray-200"></div>
+      </div>
+    )}
+  </div>
+);
+
+const StatWidget = ({ icon, label, value, color }) => (
+  <div className="bg-white p-5 rounded-3xl border border-gray-50 shadow-sm flex flex-col gap-3">
+    <div className="w-10 h-10 rounded-2xl flex items-center justify-center" style={{ backgroundColor: `${color}12`, color: color }}>
+      {icon}
+    </div>
+    <div>
+      <p className="text-[10px] font-bold text-gray-400 uppercase mb-1">{label}</p>
+      <p className="text-xl font-black text-slate-800">{value}</p>
+    </div>
+  </div>
+);
+
+// --- 3. Main App ---
+export default function App() {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState('전체');
+  const scrollRef = useRef(null);
+
+  const handleHomeClick = () => {
+    setSelectedCategory('전체');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const filteredPosts = selectedCategory === '전체' 
+    ? MOCK_POSTS 
+    : MOCK_POSTS.filter(p => p.category === selectedCategory);
+
+  return (
+    <div className="min-h-screen font-sans pb-20" style={{ backgroundColor: COLORS.background }}>
+      <Sidebar 
+        isOpen={isSidebarOpen} 
+        onClose={() => setIsSidebarOpen(false)} 
+        activeCategory={selectedCategory}
+        onCategorySelect={setSelectedCategory}
+      />
+      
+      <Header onHomeClick={handleHomeClick} onMenuClick={() => setIsSidebarOpen(true)} />
+      
+      {/* 1. 최근 게시물 섹션 */}
+      <section className="pt-10 pb-8 overflow-hidden">
+        <SectionHeader 
+          title={selectedCategory === '전체' ? "최근 아카이브" : `${selectedCategory} 기록`} 
+          subtitle={selectedCategory === '전체' ? "Swipe to explore" : `Filtering by ${selectedCategory}`} 
+          showScrollHint={filteredPosts.length > 1} 
+        />
+        
+        <div 
+          ref={scrollRef}
+          className="flex overflow-x-auto no-scrollbar gap-5 px-6 py-4 snap-x snap-mandatory min-h-[220px]"
+        >
+          {filteredPosts.length > 0 ? (
+            filteredPosts.map(post => (
+              <HorizontalPostCard key={post.id} post={post} />
+            ))
+          ) : (
+            <div className="w-full flex flex-col items-center justify-center py-10 bg-white/50 rounded-3xl border border-dashed border-gray-200 text-gray-400 mx-6">
+              <Bookmark size={32} className="opacity-20 mb-2" />
+              <p className="text-xs font-bold uppercase tracking-widest">No Content Found</p>
+            </div>
+          )}
+          <div className="flex-shrink-0 w-1"></div>
+        </div>
+      </section>
+
+      {/* 구분선 */}
+      <div className="mx-6 h-[1px] bg-gray-100 mb-10 opacity-50"></div>
+
+      {/* 2. 대시보드 요약 섹션 */}
+      <section className="mb-10">
+        <SectionHeader title="나의 상태" subtitle="Dashboard Summary" />
+        <div className="grid grid-cols-2 gap-4 px-6">
+          <StatWidget icon={<Activity size={20} />} label="총 기록수" value="128 건" color="#00704A" />
+          <StatWidget icon={<Star size={20} />} label="즐겨찾기" value="12 개" color="#B45309" />
+        </div>
+      </section>
+
+      {/* 3. 퀵 메뉴 섹션 */}
+      <section className="mb-10">
+        <SectionHeader title="바로가기 도구" subtitle="Quick Access" />
+        <div className="px-6 space-y-3">
+          {['SBD 계산기', '세포 생물학 사전', 'Fujifilm 갤러리'].map((item, idx) => (
+            <div key={idx} className="bg-white p-5 rounded-2xl border border-gray-50 flex items-center justify-between group cursor-pointer hover:border-[#00704A]/30 transition-all">
+              <div className="flex items-center gap-4">
+                <div className="w-2 h-2 rounded-full bg-[#00704A]"></div>
+                <span className="text-sm font-bold text-slate-700">{item}</span>
+              </div>
+              <ChevronRight size={18} className="text-gray-300 group-hover:text-[#00704A] transition-colors" />
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <footer className="text-center py-10 opacity-30">
+        <p className="text-[10px] font-black uppercase tracking-[0.5em]">Hyun's Archive 2026</p>
+      </footer>
+    </div>
+  );
+}
+
+// 스타일 커스텀
+if (typeof document !== 'undefined') {
+  const style = document.createElement('style');
+  style.textContent = `
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    body { -webkit-font-smoothing: antialiased; background-color: #FDFCF7; overflow-x: hidden; }
+    html { scroll-behavior: smooth; }
+  `;
+  document.head.append(style);
+}
