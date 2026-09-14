@@ -10,7 +10,9 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kim's Snowball">
 
-    <link rel="icon" type="image/png" href="favicon.png">
+    <!-- 파비콘 설정: 원하시는 이미지 링크(URL)나 경로로 변경하세요 -->
+    <link rel="icon" type="image/png" href="https://placehold.co/192x192/3b82f6/ffffff?text=BS">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/3b82f6/ffffff?text=BS">
     
     <!-- Dynamic Web App Manifest via Blob URL -->
     <script>
@@ -22,7 +24,18 @@
             "display": "standalone",
             "background_color": "#F8FAFC",
             "theme_color": "#3b82f6",
-            "icons": [<link rel="icon" type="image/png" href="favicon.png"> ]
+            "icons": [
+                {
+                    "src": "https://placehold.co/192x192/3b82f6/ffffff?text=BS",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://placehold.co/512x512/3b82f6/ffffff?text=BS",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
         };
         const stringManifest = JSON.stringify(manifestData);
         const blob = new Blob([stringManifest], {type: 'application/json'});
