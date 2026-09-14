@@ -1,10 +1,48 @@
-
 <!DOCTYPE html>
 <html lang="ko" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>buildup Kim's snowball | 옵시디언 지식고 & 탐색기</title>
+    <title>buildup Kim's snowball / 김창현의 아카이브 </title>
+    
+    <meta name="theme-color" content="#3b82f6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Kim's Snowball">
+    <link rel="apple-touch-icon" href="https://placehold.co/192x192/3b82f6/ffffff?text=BS">
+    
+    <!-- Dynamic Web App Manifest via Blob URL -->
+    <script>
+        const manifestData = {
+            "name": "buildup Kim's snowball",
+            "short_name": "Snowball",
+            "description": "김창현의 아카이브",
+            "start_url": "./",
+            "display": "standalone",
+            "background_color": "#F8FAFC",
+            "theme_color": "#3b82f6",
+            "icons": [
+                {
+                    "src": "https://placehold.co/192x192/3b82f6/ffffff?text=BS",
+                    "sizes": "192x192",
+                    "type": "image/png"
+                },
+                {
+                    "src": "https://placehold.co/512x512/3b82f6/ffffff?text=BS",
+                    "sizes": "512x512",
+                    "type": "image/png"
+                }
+            ]
+        };
+        const stringManifest = JSON.stringify(manifestData);
+        const blob = new Blob([stringManifest], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        const manifestLink = document.createElement('link');
+        manifestLink.rel = 'manifest';
+        manifestLink.href = manifestURL;
+        document.head.appendChild(manifestLink);
+    </script>
+
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
@@ -30,27 +68,25 @@
             width: 100%;
             height: 100%;
         }
-        /* Custom scrollbar */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        /* Reference-inspired Wheel of Interest Styles (반응형 수정 완료) */
         .wheel-container {
             position: relative;
             width: 100%;
             max-width: 340px;
             aspect-ratio: 1 / 1;
             margin: 0 auto;
-            touch-action: pan-y; /* 모바일에서 세로 스크롤과 터치 회전 충돌 방지 */
+            touch-action: pan-y;
         }
         .wheel-svg-container {
             position: absolute;
             inset: 0;
             width: 100%;
             height: 100%;
-            transform: rotate(-90deg); /* 12시 방향 시작점 */
+            transform: rotate(-90deg);
             transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.08));
         }
@@ -88,7 +124,6 @@
 </head>
 <body class="min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white antialiased">
 
-    <!-- 헤더 내비게이션 -->
     <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/80">
         <div class="max-w-xl mx-auto px-5 h-14 flex justify-between items-center">
             <a href="#" onclick="app.switchPage('main')" class="font-bold text-sm sm:text-base tracking-tight text-slate-900 flex items-center gap-2">
@@ -104,10 +139,8 @@
 
     <main class="max-w-xl mx-auto w-full px-5 flex-grow py-8 space-y-6">
         
-        <!-- 1. 메인 대시보드 페이지 -->
         <section id="page-main" class="page-section active space-y-5 pt-2">
             
-            <!-- 프로필 카드 -->
             <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-slate-100 text-center space-y-4">
                 <div class="w-32 h-32 mx-auto rounded-[2rem] bg-slate-100 overflow-hidden shadow-md border-2 border-white relative group">
                     <img id="profile-img-element" src="Eunha.jpeg" alt="프로필 이미지" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/3b82f6/ffffff?text=BS'">
@@ -122,10 +155,9 @@
                     </p>
                 </div>
                 <p class="text-xs text-slate-600 leading-relaxed max-w-sm mx-auto pt-1">
-                    체계적인 카테고리와 검색 기능으로 지식 노드를 더 편리하게 탐색해보세요.
+                    홈 화면에 앱으로 추가하여 언제 어디서나 오프라인에서도 열어볼 수 있습니다.
                 </p>
 
-                <!-- 인터랙티브 소셜 링크 버튼 -->
                 <div class="flex items-center justify-center gap-3 pt-3">
                     <a href="https://www.instagram.com/xxyun__bright/" target="_blank" rel="noopener noreferrer" class="group relative w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 overflow-hidden flex items-center justify-center text-slate-700 transition-all duration-300 shadow-sm hover:border-transparent hover:shadow-md" title="인스타그램">
                         <div class="absolute inset-0 bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
@@ -142,7 +174,6 @@
                 </div>
             </div>
 
-            <!-- 관심도 측정 휠 (수정 완료) -->
             <div class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-4">
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
@@ -151,17 +182,15 @@
                     <span class="text-[11px] font-semibold text-slate-400">조각 클릭 또는 회전</span>
                 </div>
                 <p class="text-xs text-slate-500 leading-relaxed text-center">
-                    원하는 카테고리 조각을 누르면 12시 방향으로 회전하며 상세 비중이 표시됩니다.
+                    동적으로 생성된 카테고리 조각을 누르면 12시 방향으로 회전하며 상세 비중이 표시됩니다.
                 </p>
 
-                <!-- 휠 컨테이너 -->
                 <div class="py-2 flex justify-center">
                     <div class="wheel-container" id="wheel-container">
                         <svg class="wheel-svg-container" id="wheel-svg" viewBox="0 0 100 100">
                             <!-- 동적 렌더링 -->
                         </svg>
 
-                        <!-- 중앙 인디케이터 -->
                         <div class="wheel-center" id="wheel-center">
                             <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider" id="wheel-cat-name">운동</span>
                             <span class="text-[10px] sm:text-xs font-black text-slate-900 mt-0.5" id="wheel-cat-count">0개 (0%)</span>
@@ -169,7 +198,6 @@
                     </div>
                 </div>
 
-                <!-- 12시 방향 대상 카테고리 상세 설명 박스 -->
                 <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
                     <div class="space-y-0.5">
                         <div class="flex items-center gap-2">
@@ -185,11 +213,10 @@
                 </div>
             </div>
 
-            <!-- 최신 업데이트 알림 카드 -->
             <div class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-4">
                 <div class="flex justify-between items-center">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> <span id="latest-card-header-title">운동 카테고리 최신 노트</span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> <span id="latest-card-header-title">카테고리 최신 노트</span>
                     </h3>
                 </div>
                 
@@ -202,17 +229,16 @@
                     </div>
                     <div class="space-y-1 flex-grow min-w-0">
                         <div class="flex justify-between items-center text-[11px] text-slate-400 font-medium">
-                            <span id="latest-card-tag" class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md font-semibold">New Video</span>
-                            <span id="latest-card-date">2026.09.12 14:30</span>
+                            <span id="latest-card-tag" class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md font-semibold">New</span>
+                            <span id="latest-card-date">2026.09.12</span>
                         </div>
-                        <h4 id="latest-card-title" class="text-xs font-bold text-slate-900 truncate group-hover:text-blue-600 transition-colors">하체 필수 보강 루틴 및 스쿼트 교정 가이드</h4>
-                        <p id="latest-card-desc" class="text-[11px] text-slate-500 line-clamp-1">센터를 떠나서도 무릎 통증 없이 엉덩이 자극을 극대화하는 홈트레이닝 영상 가이드</p>
+                        <h4 id="latest-card-title" class="text-xs font-bold text-slate-900 truncate group-hover:text-blue-600 transition-colors">로딩 중...</h4>
+                        <p id="latest-card-desc" class="text-[11px] text-slate-500 line-clamp-1">내용을 불러오는 중입니다.</p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- 2. 블로그 페이지 -->
         <section id="page-blog" class="page-section space-y-4 pt-2">
             <div class="mb-2">
                 <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
@@ -231,38 +257,29 @@
             </div>
         </section>
 
-        <!-- 3. 아카이브 페이지 -->
         <section id="page-archive" class="page-section space-y-4 pt-2">
             <div class="mb-2">
                 <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
                 <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">지식 저장소 아카이브</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">카테고리 선택 필터 및 키워드 검색으로 노드를 탐색하세요.</p>
+                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">디렉토리가 추가되면 자동으로 늘어나는 카테고리 필터와 검색기입니다.</p>
             </div>
 
-            <!-- 카테고리 필터 바 -->
             <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none" id="search-category-pills">
-                <button onclick="app.archiveManager.setCategory('all')" class="search-pill active px-3.5 py-2 rounded-full text-xs font-semibold bg-slate-900 text-white transition-colors flex-shrink-0">전체</button>
-                <button onclick="app.archiveManager.setCategory('운동')" class="search-pill px-3.5 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0">운동</button>
-                <button onclick="app.archiveManager.setCategory('의학')" class="search-pill px-3.5 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0">의학</button>
-                <button onclick="app.archiveManager.setCategory('과학')" class="search-pill px-3.5 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0">과학</button>
-                <button onclick="app.archiveManager.setCategory('언어')" class="search-pill px-3.5 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0">언어</button>
+                <!-- 동적 렌더링 -->
             </div>
 
-            <!-- 검색기 바 -->
             <div class="relative">
                 <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </span>
-                <input type="text" id="archive-search-input" oninput="app.archiveManager.handleSearch(this.value)" placeholder="노트 제목, 소카테고리, 내용 검색..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-blue-600 shadow-sm transition-colors">
+                <input type="text" id="archive-search-input" oninput="app.archiveManager.handleSearch(this.value)" placeholder="노트 제목, 카테고리, 내용 백링크 검색..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-blue-600 shadow-sm transition-colors">
             </div>
 
-            <!-- 결과 노트 피드 -->
             <div id="obsidian-notes-container" class="space-y-3 pt-1">
                 <!-- 동적 렌더링 -->
             </div>
         </section>
 
-        <!-- 4. 컨택 페이지 -->
         <section id="page-contact" class="page-section space-y-4 pt-2">
             <div class="mb-2">
                 <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
@@ -288,6 +305,32 @@
     </footer>
 
     <script>
+        // PWA Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                const swCode = `
+                    self.addEventListener('install', (e) => {
+                        self.skipWaiting();
+                    });
+                    self.addEventListener('activate', (e) => {
+                        e.waitUntil(clients.claim());
+                    });
+                    self.addEventListener('fetch', (e) => {
+                        e.respondWith(
+                            caches.match(e.request).then((response) => {
+                                return response || fetch(e.request).catch(() => {});
+                            })
+                        );
+                    });
+                `;
+                const blobSW = new Blob([swCode], {type: 'text/javascript'});
+                const swUrl = URL.createObjectURL(blobSW);
+                navigator.serviceWorker.register(swUrl)
+                    .then(() => console.log('PWA Service Worker Registered Successfully'))
+                    .catch((err) => console.log('PWA Registration Failed', err));
+            });
+        }
+
         class KnowledgeDatabase {
             constructor() {
                 this.notes = [
@@ -355,12 +398,18 @@
                     { name: "purple", fill: "#8b5cf6", textHex: "#ffffff", light: "bg-purple-50 text-purple-700" },
                     { name: "emerald", fill: "#10b981", textHex: "#ffffff", light: "bg-emerald-50 text-emerald-700" },
                     { name: "amber", fill: "#f59e0b", textHex: "#ffffff", light: "bg-amber-50 text-amber-700" },
-                    { name: "rose", fill: "#f43f5e", textHex: "#ffffff", light: "bg-rose-50 text-rose-700" }
+                    { name: "rose", fill: "#f43f5e", textHex: "#ffffff", light: "bg-rose-50 text-rose-700" },
+                    { name: "cyan", fill: "#06b6d4", textHex: "#ffffff", light: "bg-cyan-50 text-cyan-700" },
+                    { name: "teal", fill: "#14b8a6", textHex: "#ffffff", light: "bg-teal-50 text-teal-700" }
                 ];
             }
 
             getAllNotes() {
                 return this.notes;
+            }
+
+            getCategories() {
+                return [...new Set(this.notes.map(note => note.category))];
             }
 
             addNote(noteData) {
@@ -583,16 +632,26 @@
                 this.currentQuery = '';
             }
 
+            renderCategoryPills() {
+                const container = document.getElementById('search-category-pills');
+                if (!container) return;
+
+                const categories = this.db.getCategories();
+                
+                let html = `<button onclick="app.archiveManager.setCategory('all')" class="search-pill ${this.currentCategory === 'all' ? 'active bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'} px-3.5 py-2 rounded-full text-xs font-semibold transition-colors flex-shrink-0">전체</button>`;
+
+                categories.forEach(cat => {
+                    const isActive = this.currentCategory === cat;
+                    const activeClass = isActive ? 'active bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100';
+                    html += `<button onclick="app.archiveManager.setCategory('${cat}')" class="search-pill ${activeClass} px-3.5 py-2 rounded-full text-xs font-semibold transition-colors flex-shrink-0">${cat}</button>`;
+                });
+
+                container.innerHTML = html;
+            }
+
             setCategory(cat) {
                 this.currentCategory = cat;
-                const pills = document.querySelectorAll('.search-pill');
-                pills.forEach(p => {
-                    if ((cat === 'all' && p.innerText === '전체') || p.innerText === cat) {
-                        p.className = 'search-pill active px-3.5 py-2 rounded-full text-xs font-semibold bg-slate-900 text-white transition-colors flex-shrink-0';
-                    } else {
-                        p.className = 'search-pill px-3.5 py-2 rounded-full text-xs font-semibold bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 transition-colors flex-shrink-0';
-                    }
-                });
+                this.renderCategoryPills();
                 this.renderNotes();
             }
 
@@ -602,6 +661,7 @@
             }
 
             renderNotes() {
+                this.renderCategoryPills();
                 const container = document.getElementById('obsidian-notes-container');
                 if (!container) return;
 
@@ -615,7 +675,8 @@
                     notes = notes.filter(n => 
                         n.title.toLowerCase().includes(this.currentQuery) || 
                         n.description.toLowerCase().includes(this.currentQuery) ||
-                        n.subCategory.toLowerCase().includes(this.currentQuery)
+                        n.subCategory.toLowerCase().includes(this.currentQuery) ||
+                        n.category.toLowerCase().includes(this.currentQuery)
                     );
                 }
 
@@ -749,8 +810,3 @@
 
 </body>
 </html>
-
-
-
-Gemini는 AI이며 인물 등에 관한 정보 제공 시 실수를 할 수 있습니다. 개인 정보 보호 및 Gemini새 창에서 열기
-
