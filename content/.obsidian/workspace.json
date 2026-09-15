@@ -6,6 +6,7 @@
       {
         "id": "3651e52bb0d17bc1",
         "type": "tabs",
+        "dimension": 70.58823529411765,
         "children": [
           {
             "id": "1cf07b2b05d6f2e2",
@@ -13,12 +14,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "의학/PFPS-해부학적-이해.md",
+                "file": "운동/하체-스쿼트-교정.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "PFPS-해부학적-이해"
+              "title": "하체-스쿼트-교정"
             }
           }
         ]
@@ -26,6 +27,7 @@
       {
         "id": "cbe4def6eafc1922",
         "type": "tabs",
+        "dimension": 29.411764705882355,
         "children": [
           {
             "id": "936b2432a72aa6ba",
@@ -204,15 +206,17 @@
       "bases:Create new base": false
     }
   },
-  "active": "d4144e2c2877c797",
+  "active": "1cf07b2b05d6f2e2",
   "lastOpenFiles": [
+    "운동/벤치프레스-궤적-교정.md",
+    "의학/PFPS-해부학적-이해.md",
+    "운동/하체-스쿼트-교정.md",
+    "과학/근비대-생체역학.md",
     "언어",
     "과학",
     "운동",
     "Welcome.md",
     "의학",
-    "과학/근비대-생체역학.md",
-    "언어/코칭-스피치-바디랭귀지.md",
-    "운동/벤치프레스-궤적-교정.md"
+    "언어/코칭-스피치-바디랭귀지.md"
   ]
 }
