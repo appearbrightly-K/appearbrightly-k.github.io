@@ -4,16 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>buildup Kim's snowball | 김창현의 아카이브</title>
-    
-    <meta name="theme-color" content="#3b82f6">
+
+    <meta name="theme-color" content="#0F172A">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="apple-mobile-web-app-title" content="Kim's Snowball">
 
-    <!-- 파비콘 및 아이콘 설정 -->
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="apple-touch-icon" href="favicon.png">
-    
+
     <!-- Dynamic Web App Manifest via Blob URL -->
     <script>
         const manifestData = {
@@ -23,13 +22,9 @@
             "start_url": "./",
             "display": "standalone",
             "background_color": "#F8FAFC",
-            "theme_color": "#3b82f6",
+            "theme_color": "#0F172A",
             "icons": [
-                {
-                    "src": "favicon.png",
-                    "sizes": "192x192 512x512",
-                    "type": "image/png"
-                }
+                { "src": "favicon.png", "sizes": "192x192 512x512", "type": "image/png" }
             ]
         };
         const stringManifest = JSON.stringify(manifestData);
@@ -42,13 +37,12 @@
     </script>
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        body { 
+        body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
             background-color: #F8FAFC;
             color: #0F172A;
-            user-select: none;
         }
         .page-section { display: none; }
         .page-section.active { display: block; }
@@ -60,570 +54,167 @@
             border-radius: 1rem;
         }
         .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
-        .wheel-container {
-            position: relative;
-            width: 100%;
-            max-width: 340px;
-            aspect-ratio: 1 / 1;
-            margin: 0 auto;
-            touch-action: pan-y;
-        }
-        .wheel-svg-container {
-            position: absolute;
-            inset: 0;
-            width: 100%;
-            height: 100%;
-            transform: rotate(-90deg);
-            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.08));
-        }
-        .wheel-center {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 29%;
-            height: 29%;
-            min-width: 80px;
-            min-height: 80px;
-            background: rgba(255, 255, 255, 0.98);
-            backdrop-filter: blur(12px);
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            z-index: 10;
-            text-align: center;
-            padding: 8px;
-            border: 1px solid rgba(226, 232, 240, 0.9);
-            pointer-events: none;
-        }
-        .wheel-segment {
-            cursor: pointer;
-            transition: filter 0.2s ease, opacity 0.2s ease;
-        }
-        .wheel-segment:hover {
-            filter: brightness(0.95);
-        }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-blue-500 selection:text-white antialiased">
+<body class="min-h-screen flex flex-col justify-between antialiased">
 
-    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/80">
-        <div class="max-w-xl mx-auto px-5 h-14 flex justify-between items-center">
-            <a href="#" onclick="app.switchPage('main')" class="font-bold text-sm sm:text-base tracking-tight text-slate-900 flex items-center gap-2">
-            <!-- 기존 파란 동그라미 대신 favicon.png 이미지로 교체 (크기 및 레이아웃 유지) -->
-            <img src="./favicon.png" alt="Snowball Logo" class="w-5 h-5 rounded-full object-cover"> 
-            buildup Kim's snowball
-            <nav class="flex gap-4 sm:gap-6 text-sm font-medium text-slate-600">
-                <button onclick="app.switchPage('blog')" id="nav-blog" class="hover:text-blue-600 transition-colors">블로그</button>
-                <button onclick="app.switchPage('archive')" id="nav-archive" class="hover:text-blue-600 transition-colors">아카이브</button>
-                <button onclick="app.switchPage('contact')" id="nav-contact" class="hover:text-blue-600 transition-colors">컨택</button>
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/85 border-b border-slate-200">
+        <div class="max-w-md mx-auto px-5 h-14 flex justify-between items-center">
+            <button onclick="app.switchPage('main')" class="font-bold text-sm text-slate-900 flex items-center gap-2">
+                <img src="./favicon.png" alt="" class="w-5 h-5 rounded-full object-cover">
+                buildup Kim's snowball
+            </button>
+            <nav class="flex gap-4 text-xs font-medium text-slate-500">
+                <button onclick="app.switchPage('blog')" class="hover:text-slate-900 transition-colors">블로그</button>
+                <button onclick="app.switchPage('archive')" class="hover:text-slate-900 transition-colors">아카이브</button>
+                <button onclick="app.switchPage('contact')" class="hover:text-slate-900 transition-colors">컨택</button>
             </nav>
         </div>
     </header>
 
-    <main class="max-w-xl mx-auto w-full px-5 flex-grow py-8 space-y-6">
-        
-        <section id="page-main" class="page-section active space-y-5 pt-2">
-            
-           <div class="bg-white p-6 sm:p-8 rounded-[2rem] shadow-sm border border-slate-100 text-center space-y-4">
-    <!-- 프로필 이미지를 favicon.png로 변경하고 비율/가시성 최적화 -->
-    <div class="w-32 h-32 mx-auto rounded-[2rem] bg-slate-100 overflow-hidden shadow-md border-2 border-white relative group">
-        <img id="profile-img-element" src="./favicon.png" alt="프로필 이미지" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200/3b82f6/ffffff?text=BS'">
-    </div>
-                
-    <div class="space-y-1.5">
-        <h1 class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 leading-snug">
-            buildup Kim's snowball
-        </h1>
-        <p class="text-xs sm:text-sm text-slate-600 font-medium">
-            지식을 굴려 거대한 눈사람을 만드는 지식 저장소 🧠
-        </p>
-    </div>
-    
-    <p class="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto pt-1">
-        홈 화면에 앱으로 추가하여 언제 어디서나 오프라인에서도 열어볼 수 있습니다.
-    </p>
-</div>
+    <main class="max-w-md mx-auto w-full px-5 flex-grow py-8 space-y-6">
 
-                <div class="flex items-center justify-center gap-3 pt-3">
-                    <a href="https://www.instagram.com/xxyun__bright/" target="_blank" rel="noopener noreferrer" class="group relative w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 overflow-hidden flex items-center justify-center text-slate-700 transition-all duration-300 shadow-sm hover:border-transparent hover:shadow-md" title="인스타그램">
-                        <div class="absolute inset-0 bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-                        <svg class="w-5 h-5 fill-current relative z-10 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="https://www.youtube.com/shorts/sR2aB45AaNY?source_ve_path=MjM4NTE&embeds_referring_euri=https%3A%2F%2Flitt.ly%2F" target="_blank" rel="noopener noreferrer" class="group relative w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 overflow-hidden flex items-center justify-center text-slate-700 transition-all duration-300 shadow-sm hover:border-transparent hover:shadow-md" title="유튜브 쇼츠">
-                        <div class="absolute inset-0 bg-red-600 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-                        <svg class="w-5 h-5 fill-current relative z-10 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
-                    </a>
-                    <button onclick="app.switchPage('contact')" class="group relative w-12 h-12 rounded-2xl bg-slate-50 border border-slate-200/80 overflow-hidden flex items-center justify-center text-slate-700 transition-all duration-300 shadow-sm hover:border-transparent hover:shadow-md" title="소통 채널">
-                        <div class="absolute inset-0 bg-emerald-500 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
-                        <svg class="w-5 h-5 fill-none stroke-current stroke-2 relative z-10 group-hover:text-white transition-colors duration-300" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
-                    </button>
+        <!-- 홈 -->
+        <section id="page-main" class="page-section active space-y-5">
+
+            <div class="bg-white border border-slate-200 rounded-3xl overflow-hidden">
+                <div class="aspect-[4/3] bg-slate-100">
+                    <img src="./favicon.png" alt="프로필 이미지" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/480x360/0f172a/ffffff?text=BK'">
                 </div>
-            </div>
-
-            <div class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-blue-600 animate-pulse"></span> 나의 관심도 측정 휠
-                    </h3>
-                    <span class="text-[11px] font-semibold text-slate-400">조각 클릭 또는 회전</span>
-                </div>
-                <p class="text-xs text-slate-500 leading-relaxed text-center">
-                    동적으로 생성된 카테고리 조각을 누르면 12시 방향으로 회전하며 상세 비중이 표시됩니다.
-                </p>
-
-                <div class="py-2 flex justify-center">
-                    <div class="wheel-container" id="wheel-container">
-                        <svg class="wheel-svg-container" id="wheel-svg" viewBox="0 0 100 100">
-                            <!-- 동적 렌더링 -->
-                        </svg>
-
-                        <div class="wheel-center" id="wheel-center">
-                            <span class="text-[9px] sm:text-[10px] font-bold text-slate-400 uppercase tracking-wider" id="wheel-cat-name">운동</span>
-                            <span class="text-[10px] sm:text-xs font-black text-slate-900 mt-0.5" id="wheel-cat-count">0개 (0%)</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-100 flex items-center justify-between">
-                    <div class="space-y-0.5">
-                        <div class="flex items-center gap-2">
-                            <span class="w-2 h-2 rounded-full bg-blue-600" id="current-top-dot"></span>
-                            <span class="text-xs font-bold text-slate-900" id="current-top-title">운동 파트</span>
-                            <span class="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full" id="current-top-badge">가장 선호하는 파트예요</span>
-                        </div>
-                        <p class="text-[11px] text-slate-500 pl-4" id="current-top-desc">현재 가장 높은 비중으로 집중하고 있는 카테고리입니다.</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-sm font-black text-slate-900" id="current-top-stat">2개 (40%)</span>
+                <div class="px-5 py-5 space-y-2.5">
+                    <h1 class="text-lg font-bold text-slate-900">Welcome to Kim's Archive</h1>
+                    <p class="text-xs text-slate-500 leading-relaxed">지식을 공유합니다.</p>
+                    <div class="flex items-center gap-2 pt-1">
+                        <a href="https://www.instagram.com/xxyun__bright/" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:border-slate-900 hover:text-slate-900 transition-colors" title="인스타그램">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                        </a>
+                        <a href="https://www.youtube.com/shorts/sR2aB45AaNY" target="_blank" rel="noopener noreferrer" class="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:border-slate-900 hover:text-slate-900 transition-colors" title="유튜브 쇼츠">
+                            <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        </a>
+                        <button onclick="app.switchPage('contact')" class="w-7 h-7 rounded-full border border-slate-200 flex items-center justify-center text-slate-600 hover:border-slate-900 hover:text-slate-900 transition-colors" title="소통 채널">
+                            <svg class="w-3.5 h-3.5 fill-none stroke-current stroke-2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/></svg>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span> <span id="latest-card-header-title">카테고리 최신 노트</span>
-                    </h3>
+            <!-- 최신 노트 -->
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-xs font-bold text-slate-900">최신 노트</h2>
+                    <span class="text-[11px] text-slate-400" id="latest-card-date">-</span>
+
                 </div>
-                
-                <div id="latest-card-content" onclick="app.goToLatestNote()" class="p-3.5 rounded-2xl bg-slate-50 hover:bg-blue-50 hover:border-blue-300 border border-transparent transition-all duration-200 cursor-pointer flex gap-3.5 items-center group shadow-xs">
-                    <div class="w-20 h-20 rounded-2xl bg-slate-200 overflow-hidden flex-shrink-0 relative shadow-sm">
-                        <img id="latest-card-thumb" src="https://placehold.co/160x160/3b82f6/ffffff?text=Video" alt="최신 업데이트 썸네일" class="w-full h-full object-cover">
-                        <div id="latest-card-badge-overlay" class="absolute inset-0 bg-black/20 flex items-center justify-center">
-                            <svg class="w-6 h-6 text-white drop-shadow" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                        </div>
+                <div id="latest-card-content" onclick="app.goToLatestNote()" class="cursor-pointer group">
+                    <div class="flex items-center gap-2 text-[11px] mb-1">
+                        <span id="latest-card-tag" class="bg-slate-900 text-white px-2 py-0.5 rounded-md font-semibold">-</span>
                     </div>
-                    <div class="space-y-1 flex-grow min-w-0">
-                        <div class="flex justify-between items-center text-[11px] text-slate-400 font-medium">
-                            <span id="latest-card-tag" class="bg-blue-100 text-blue-700 px-2.5 py-0.5 rounded-md font-semibold">New</span>
-                            <span id="latest-card-date">2026.09.12</span>
-                        </div>
-                        <h4 id="latest-card-title" class="text-xs font-bold text-slate-900 truncate group-hover:text-blue-600 transition-colors">로딩 중...</h4>
-                        <p id="latest-card-desc" class="text-[11px] text-slate-500 line-clamp-1">내용을 불러오는 중입니다.</p>
-                    </div>
+                    <h3 id="latest-card-title" class="text-sm font-bold text-slate-900 group-hover:underline">로딩 중...</h3>
+                    <p id="latest-card-desc" class="text-xs text-slate-500 mt-0.5 line-clamp-2">내용을 불러오는 중입니다.</p>
                 </div>
             </div>
         </section>
 
-        <section id="page-blog" class="page-section space-y-4 pt-2">
-            <div class="mb-2">
-                <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
-                <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">트레이너 블로그</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">수업 외적으로 전하고 싶은 생각과 운동 인사이트를 기록합니다.</p>
+        <!-- 블로그 -->
+        <section id="page-blog" class="page-section space-y-4">
+            <div>
+                <button onclick="app.switchPage('main')" class="text-xs text-slate-500 font-semibold mb-2">&larr; 홈으로</button>
+                <h2 class="text-base font-bold text-slate-900">트레이너 블로그</h2>
+                <p class="text-xs text-slate-500 mt-0.5">수업 외적으로 전하고 싶은 생각과 운동 인사이트를 기록합니다.</p>
             </div>
-
-            <div class="space-y-4">
-                <article class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm space-y-2">
-                    <span class="text-xs font-semibold text-slate-400">2026.09.12</span>
-                    <h3 class="text-base font-bold text-slate-900">센터를 떠나며 회원님들께 남기는 편지</h3>
-                    <p class="text-slate-600 text-xs sm:text-sm leading-relaxed">
+            <div class="space-y-3">
+                <article class="bg-white border border-slate-200 rounded-2xl p-5 space-y-1.5">
+                    <span class="text-[11px] text-slate-400">2026.09.12</span>
+                    <h3 class="text-sm font-bold text-slate-900">센터를 떠나며 회원님들께 남기는 편지</h3>
+                    <p class="text-slate-500 text-xs leading-relaxed">
                         처음 운동을 시작했을 때 덤벨 드는 것조차 힘들어하시던 모습이 선명한데, 벌써 이렇게 혼자서도 척척 해내시는 모습을 보면 감회가 새롭습니다. 이 공간이 작은 나침반이 되었으면 좋겠습니다.
                     </p>
                 </article>
             </div>
         </section>
 
-        <section id="page-archive" class="page-section space-y-4 pt-2">
-            <div class="mb-2">
-                <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
-                <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">지식 저장소 아카이브</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">디렉토리가 추가되면 자동으로 늘어나는 카테고리 필터와 검색기입니다.</p>
+        <!-- 아카이브 -->
+        <section id="page-archive" class="page-section space-y-4">
+            <div>
+                <button onclick="app.switchPage('main')" class="text-xs text-slate-500 font-semibold mb-2">&larr; 홈으로</button>
+                <h2 class="text-base font-bold text-slate-900">지식 저장소 아카이브</h2>
+                <p class="text-xs text-slate-500 mt-0.5">카테고리 필터와 검색으로 노트를 찾아보세요.</p>
             </div>
 
-            <div class="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none" id="search-category-pills">
-                <!-- 동적 렌더링 -->
-            </div>
+            <div class="flex items-center gap-1.5 overflow-x-auto pb-1" id="search-category-pills"><!-- 동적 렌더링 --></div>
 
             <div class="relative">
-                <span class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
                 </span>
-                <input type="text" id="archive-search-input" oninput="app.archiveManager.handleSearch(this.value)" placeholder="노트 제목, 카테고리, 내용 백링크 검색..." class="w-full pl-11 pr-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm focus:outline-none focus:border-blue-600 shadow-sm transition-colors">
+                <input type="text" id="archive-search-input" oninput="app.archiveManager.handleSearch(this.value)" placeholder="제목, 카테고리, 백링크 검색" class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs focus:outline-none focus:border-slate-900 transition-colors">
             </div>
 
-            <div id="obsidian-notes-container" class="space-y-3 pt-1">
-                <!-- 동적 렌더링 -->
-            </div>
+            <div id="obsidian-notes-container" class="space-y-3"><!-- 동적 렌더링 --></div>
         </section>
 
-        <section id="page-contact" class="page-section space-y-4 pt-2">
-            <div class="mb-2">
-                <button onclick="app.switchPage('main')" class="text-xs text-blue-600 font-semibold mb-2 flex items-center gap-1">&larr; 홈으로 돌아가기</button>
-                <h2 class="text-lg sm:text-xl font-bold text-slate-900 tracking-tight">컨택 및 소통 채널</h2>
-                <p class="text-xs sm:text-sm text-slate-500 mt-0.5">운동하다 막히는 부위나 자세 피드백이 필요하면 편하게 연락 주세요.</p>
+        <!-- 컨택 -->
+        <section id="page-contact" class="page-section space-y-4">
+            <div>
+                <button onclick="app.switchPage('main')" class="text-xs text-slate-500 font-semibold mb-2">&larr; 홈으로</button>
+                <h2 class="text-base font-bold text-slate-900">컨택 및 소통 채널</h2>
+                <p class="text-xs text-slate-500 mt-0.5">운동하다 막히는 부위나 자세 피드백이 필요하면 편하게 연락 주세요.</p>
             </div>
-            
-            <div class="bg-white border border-slate-100 rounded-[2rem] p-6 shadow-sm flex flex-col gap-4">
-                <div>
-                    <h4 class="font-bold text-slate-900 text-base">개인 소통 채널 안내</h4>
-                    <p class="text-slate-500 text-xs sm:text-sm mt-1 leading-relaxed">이전 수업 받으셨던 회원님들은 언제든 오픈채팅이나 인스타그램 DM으로 질문 남겨주세요.</p>
-                </div>
-                <button onclick="app.showContactModal()" class="w-full bg-blue-600 text-white py-3.5 rounded-2xl font-bold text-sm hover:bg-blue-700 transition-colors text-center active:scale-[0.98] shadow-md shadow-blue-500/20">
-                    오픈채팅 및 연락처 확인하기
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-3">
+                <p class="text-slate-500 text-xs leading-relaxed">이전 수업을 받으셨던 회원님들은 언제든 인스타그램 DM으로 질문을 남겨주세요. 오픈채팅 링크는 준비되는 대로 이곳에 연결할 예정입니다.</p>
+                <button onclick="app.showContactModal()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-xs hover:bg-slate-800 transition-colors">
+                    연락처 확인하기
                 </button>
             </div>
         </section>
 
     </main>
 
-    <footer class="max-w-xl mx-auto w-full px-5 py-8 border-t border-slate-200/60 text-center text-xs text-slate-400">
-        <p>&copy; 2026 buildup Kim's snowball. Obsidian Knowledge Network.</p>
+    <footer class="max-w-md mx-auto w-full px-5 py-8 border-t border-slate-200 text-center text-[11px] text-slate-400">
+        <p>&copy; 2026 buildup Kim's snowball</p>
     </footer>
 
     <script>
-        // PWA Service Worker Registration
+        // PWA Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 const swCode = `
-                    self.addEventListener('install', (e) => {
-                        self.skipWaiting();
-                    });
-                    self.addEventListener('activate', (e) => {
-                        e.waitUntil(clients.claim());
-                    });
+                    self.addEventListener('install', (e) => { self.skipWaiting(); });
+                    self.addEventListener('activate', (e) => { e.waitUntil(clients.claim()); });
                     self.addEventListener('fetch', (e) => {
-                        e.respondWith(
-                            caches.match(e.request).then((response) => {
-                                return response || fetch(e.request).catch(() => {});
-                            })
-                        );
+                        e.respondWith(caches.match(e.request).then((response) => response || fetch(e.request).catch(() => {})));
                     });
                 `;
                 const blobSW = new Blob([swCode], {type: 'text/javascript'});
                 const swUrl = URL.createObjectURL(blobSW);
-                navigator.serviceWorker.register(swUrl)
-                    .then(() => console.log('PWA Service Worker Registered Successfully'))
-                    .catch((err) => console.log('PWA Registration Failed', err));
+                navigator.serviceWorker.register(swUrl).catch(() => {});
             });
         }
 
         class KnowledgeDatabase {
             constructor() {
                 this.notes = [
-                    {
-                        id: 1,
-                        category: "운동",
-                        subCategory: "하체근력",
-                        title: "하체 필수 보강 루틴 및 스쿼트 교정 가이드",
-                        date: "2026.09.12 14:30",
-                        description: "스쿼트와 런지 시 무릎 통증을 방지하고 엉덩이 타깃을 정확히 잡는 핵심 영상 가이드입니다.",
-                        hasVideo: true,
-                        youtubeId: "dQw4w9WgXcQ",
-                        thumbnail: "https://placehold.co/160x160/3b82f6/ffffff?text=Video",
-                        linkedNotes: ["근육학", "해부학"]
-                    },
-                    {
-                        id: 2,
-                        category: "운동",
-                        subCategory: "상체근력",
-                        title: "벤치프레스 궤적 교정 및 어깨 안정성 확보",
-                        date: "2026.09.09 10:15",
-                        description: "견갑골 후인하강 유지와 전면 삼각골 부상 방지를 위한 상체 루틴 분석.",
-                        hasVideo: false,
-                        thumbnail: "https://placehold.co/160x160/10b981/ffffff?text=Upper",
-                        linkedNotes: ["해부학"]
-                    },
-                    {
-                        id: 3,
-                        category: "의학",
-                        subCategory: "재활의학",
-                        title: "슬개골 대퇴 증후군(PFPS)의 해부학적 이해",
-                        date: "2026.09.10 11:00",
-                        description: "무릎 전면부 통증의 원인과 대퇴사두근 및 고관절 외전근 강화 운동의 상관관계 분석.",
-                        hasVideo: false,
-                        thumbnail: "https://placehold.co/160x160/8b5cf6/ffffff?text=Medical",
-                        linkedNotes: ["하체근력", "재활운동"]
-                    },
-                    {
-                        id: 4,
-                        category: "과학",
-                        subCategory: "생리학",
-                        title: "근비대를 위한 기계적 장력과 생체 역학",
-                        date: "2026.09.08 09:15",
-                        description: "근섬유 활성화를 결정하는 텐션과 가동 범위(ROM)에 관한 생리학적 고찰.",
-                        hasVideo: false,
-                        thumbnail: "https://placehold.co/160x160/f59e0b/ffffff?text=Science",
-                        linkedNotes: ["운동", "하체근력"]
-                    },
-                    {
-                        id: 5,
-                        category: "언어",
-                        subCategory: "코칭스피치",
-                        title: "회원 소통을 위한 코칭 스피치 & 바디랭귀지",
-                        date: "2026.09.05 16:20",
-                        description: "초보자 회원에게 전문 용어를 직관적인 비유로 전달하는 트레이너 언어 습관.",
-                        hasVideo: false,
-                        thumbnail: "https://placehold.co/160x160/ec4899/ffffff?text=Speech",
-                        linkedNotes: ["운동"]
-                    }
-                ];
-
-                this.categoryColors = [
-                    { name: "blue", fill: "#3b82f6", textHex: "#ffffff", light: "bg-blue-50 text-blue-700" },
-                    { name: "indigo", fill: "#6366f1", textHex: "#ffffff", light: "bg-indigo-50 text-indigo-700" },
-                    { name: "purple", fill: "#8b5cf6", textHex: "#ffffff", light: "bg-purple-50 text-purple-700" },
-                    { name: "emerald", fill: "#10b981", textHex: "#ffffff", light: "bg-emerald-50 text-emerald-700" },
-                    { name: "amber", fill: "#f59e0b", textHex: "#ffffff", light: "bg-amber-50 text-amber-700" },
-                    { name: "rose", fill: "#f43f5e", textHex: "#ffffff", light: "bg-rose-50 text-rose-700" },
-                    { name: "cyan", fill: "#06b6d4", textHex: "#ffffff", light: "bg-cyan-50 text-cyan-700" },
-                    { name: "teal", fill: "#14b8a6", textHex: "#ffffff", light: "bg-teal-50 text-teal-700" }
+                    { id: 1, category: "운동", subCategory: "하체근력", title: "하체 필수 보강 루틴 및 스쿼트 교정 가이드", date: "2026.09.12", description: "스쿼트와 런지 시 무릎 통증을 방지하고 엉덩이 타깃을 정확히 잡는 핵심 영상 가이드입니다.", hasVideo: true, youtubeId: "dQw4w9WgXcQ", linkedNotes: ["근육학", "해부학"] },
+                    { id: 2, category: "운동", subCategory: "상체근력", title: "벤치프레스 궤적 교정 및 어깨 안정성 확보", date: "2026.09.09", description: "견갑골 후인하강 유지와 전면 삼각골 부상 방지를 위한 상체 루틴 분석.", hasVideo: false, linkedNotes: ["해부학"] },
+                    { id: 3, category: "의학", subCategory: "재활의학", title: "슬개골 대퇴 증후군(PFPS)의 해부학적 이해", date: "2026.09.10", description: "무릎 전면부 통증의 원인과 대퇴사두근 및 고관절 외전근 강화 운동의 상관관계 분석.", hasVideo: false, linkedNotes: ["하체근력", "재활운동"] },
+                    { id: 4, category: "과학", subCategory: "생리학", title: "근비대를 위한 기계적 장력과 생체 역학", date: "2026.09.08", description: "근섬유 활성화를 결정하는 텐션과 가동 범위(ROM)에 관한 생리학적 고찰.", hasVideo: false, linkedNotes: ["운동", "하체근력"] },
+                    { id: 5, category: "언어", subCategory: "코칭스피치", title: "회원 소통을 위한 코칭 스피치 & 바디랭귀지", date: "2026.09.05", description: "초보자 회원에게 전문 용어를 직관적인 비유로 전달하는 트레이너 언어 습관.", hasVideo: false, linkedNotes: ["운동"] }
                 ];
             }
-
-            getAllNotes() {
-                return this.notes;
-            }
-
-            getCategories() {
-                return [...new Set(this.notes.map(note => note.category))];
-            }
-
+            getAllNotes() { return this.notes; }
+            getCategories() { return [...new Set(this.notes.map(n => n.category))]; }
             addNote(noteData) {
                 const newNote = { id: Date.now(), ...noteData };
                 this.notes.push(newNote);
                 return newNote;
-            }
-        }
-
-        class WheelManager {
-            constructor(db, onCategorySelect) {
-                this.db = db;
-                this.onCategorySelect = onCategorySelect;
-                this.currentRotation = 0;
-                this.isDragging = false;
-                this.startAngle = 0;
-                this.categories = [];
-                this.activeCategory = null;
-            }
-
-            init() {
-                this.calculateCategories();
-                this.renderSVG();
-                this.setupDragEvents();
-                if (this.categories.length > 0) {
-                    this.setActiveCategory(this.categories[0]);
-                }
-            }
-
-            calculateCategories() {
-                const notes = this.db.getAllNotes();
-                const catMap = {};
-                
-                notes.forEach(note => {
-                    catMap[note.category] = (catMap[note.category] || 0) + 1;
-                });
-
-                const totalNotes = notes.length;
-                let cumulativeAngle = 0;
-
-                this.categories = Object.keys(catMap).map((cat, idx) => {
-                    const count = catMap[cat];
-                    const percentage = totalNotes > 0 ? Math.round((count / totalNotes) * 100) : 0;
-                    const angleSpan = totalNotes > 0 ? (count / totalNotes) * 360 : 0;
-                    const startAngle = cumulativeAngle;
-                    cumulativeAngle += angleSpan;
-
-                    return {
-                        name: cat,
-                        count: count,
-                        percentage: percentage,
-                        startAngle: startAngle,
-                        endAngle: cumulativeAngle,
-                        midAngle: startAngle + angleSpan / 2,
-                        colorObj: this.db.categoryColors[idx % this.db.categoryColors.length]
-                    };
-                });
-            }
-
-            getCoordinatesForPercent(percent) {
-                const x = Math.cos(2 * Math.PI * percent);
-                const y = Math.sin(2 * Math.PI * percent);
-                return [x, y];
-            }
-
-            renderSVG() {
-                const svg = document.getElementById('wheel-svg');
-                if (!svg) return;
-
-                const totalNotes = this.db.getAllNotes().length;
-                if (totalNotes === 0) return;
-
-                let cumulativePercent = 0;
-                let svgHtml = '';
-
-                this.categories.forEach((cat, index) => {
-                    const percent = cat.count / totalNotes;
-                    const startPercent = cumulativePercent;
-                    const endPercent = cumulativePercent + percent;
-                    cumulativePercent = endPercent;
-
-                    const [startX, startY] = this.getCoordinatesForPercent(startPercent);
-                    const [endX, endY] = this.getCoordinatesForPercent(endPercent);
-
-                    const largeArcFlag = percent > 0.5 ? 1 : 0;
-                    const rOuter = 44;
-                    const rInner = 28;
-
-                    const x1 = 50 + rOuter * startX;
-                    const y1 = 50 + rOuter * startY;
-                    const x2 = 50 + rOuter * endX;
-                    const y2 = 50 + rOuter * endY;
-
-                    const ix1 = 50 + rInner * endX;
-                    const iy1 = 50 + rInner * endY;
-                    const ix2 = 50 + rInner * startX;
-                    const iy2 = 50 + rInner * startY;
-
-                    const pathData = [
-                        `M ${x1} ${y1}`,
-                        `A ${rOuter} ${rOuter} 0 ${largeArcFlag} 1 ${x2} ${y2}`,
-                        `L ${ix1} ${iy1}`,
-                        `A ${rInner} ${rInner} 0 ${largeArcFlag} 0 ${ix2} ${iy2}`,
-                        `Z`
-                    ].join(' ');
-
-                    const midPercent = startPercent + percent / 2;
-                    const rMid = 36;
-                    const [midX, midY] = this.getCoordinatesForPercent(midPercent);
-                    const textX = 50 + rMid * midX;
-                    const textY = 50 + rMid * midY;
-
-                    svgHtml += `
-                        <g class="wheel-segment" onclick="app.wheelManager.rotateToCategory(${index})">
-                            <path d="${pathData}" fill="${cat.colorObj.fill}" stroke="#ffffff" stroke-width="2.5" />
-                            <text x="${textX}" y="${textY}" fill="#ffffff" font-size="5.5" font-weight="700" text-anchor="middle" dominant-baseline="middle" transform="rotate(90, ${textX}, ${textY})" style="pointer-events:none; filter: drop-shadow(0 1px 2px rgba(0,0,0,0.3));">
-                                ${cat.count}개
-                            </text>
-                            <title>${cat.name}: ${cat.count}개 (${cat.percentage}%)</title>
-                        </g>
-                    `;
-                });
-
-                svg.innerHTML = svgHtml;
-                svg.style.transform = `rotate(${this.currentRotation - 90}deg)`;
-            }
-
-            rotateToCategory(index) {
-                const cat = this.categories[index];
-                if (!cat) return;
-                const targetMidAngle = cat.startAngle + (cat.endAngle - cat.startAngle) / 2;
-                this.currentRotation = -targetMidAngle;
-                this.renderSVG();
-                this.updateIndicator();
-            }
-
-            updateIndicator() {
-                let normalizedRot = (-this.currentRotation) % 360;
-                if (normalizedRot < 0) normalizedRot += 360;
-
-                let activeCat = this.categories[0];
-                for (let cat of this.categories) {
-                    if (normalizedRot >= cat.startAngle && normalizedRot < cat.endAngle) {
-                        activeCat = cat;
-                        break;
-                    }
-                }
-
-                if (!activeCat) activeCat = this.categories[0];
-                this.activeCategory = activeCat;
-
-                document.getElementById('wheel-cat-name').innerText = activeCat.name;
-                document.getElementById('wheel-cat-count').innerText = `${activeCat.count}개 (${activeCat.percentage}%)`;
-
-                document.getElementById('current-top-title').innerText = activeCat.name + " 파트";
-                document.getElementById('current-top-stat').innerText = `${activeCat.count}개 (${activeCat.percentage}%)`;
-                document.getElementById('current-top-dot').style.backgroundColor = activeCat.colorObj.fill;
-                document.getElementById('current-top-badge').className = `text-[10px] font-bold px-2 py-0.5 rounded-full ${activeCat.colorObj.light}`;
-
-                if (this.onCategorySelect) {
-                    this.onCategorySelect(activeCat.name);
-                }
-            }
-
-            setActiveCategory(cat) {
-                const idx = this.categories.findIndex(c => c.name === cat.name);
-                if (idx !== -1) {
-                    this.rotateToCategory(idx);
-                }
-            }
-
-            getAngle(e) {
-                const container = document.getElementById('wheel-container');
-                const rect = container.getBoundingClientRect();
-                const centerx = rect.left + rect.width / 2;
-                const centery = rect.top + rect.height / 2;
-                const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-                const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-                return Math.atan2(clientY - centery, clientX - centerx) * (180 / Math.PI);
-            }
-
-            setupDragEvents() {
-                const container = document.getElementById('wheel-container');
-                if (!container) return;
-
-                const start = (e) => {
-                    this.isDragging = true;
-                    this.startAngle = this.getAngle(e) - this.currentRotation;
-                    document.addEventListener('mousemove', move);
-                    document.addEventListener('mouseup', end);
-                    document.addEventListener('touchmove', move);
-                    document.addEventListener('touchend', end);
-                };
-
-                const move = (e) => {
-                    if (!this.isDragging) return;
-                    const currentAngle = this.getAngle(e);
-                    this.currentRotation = currentAngle - this.startAngle;
-                    this.renderSVG();
-                    this.updateIndicator();
-                };
-
-                const end = () => {
-                    this.isDragging = false;
-                    document.removeEventListener('mousemove', move);
-                    document.removeEventListener('mouseup', end);
-                    document.removeEventListener('touchmove', move);
-                    document.removeEventListener('touchend', end);
-                };
-
-                container.addEventListener('mousedown', start);
-                container.addEventListener('touchstart', start);
             }
         }
 
@@ -637,23 +228,18 @@
             renderCategoryPills() {
                 const container = document.getElementById('search-category-pills');
                 if (!container) return;
-
                 const categories = this.db.getCategories();
-                
-                let html = `<button onclick="app.archiveManager.setCategory('all')" class="search-pill ${this.currentCategory === 'all' ? 'active bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100'} px-3.5 py-2 rounded-full text-xs font-semibold transition-colors flex-shrink-0">전체</button>`;
 
+                let html = `<button onclick="app.archiveManager.setCategory('all')" class="px-3 py-1.5 rounded-full text-xs font-semibold flex-shrink-0 transition-colors ${this.currentCategory === 'all' ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600'}">전체</button>`;
                 categories.forEach(cat => {
                     const isActive = this.currentCategory === cat;
-                    const activeClass = isActive ? 'active bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100';
-                    html += `<button onclick="app.archiveManager.setCategory('${cat}')" class="search-pill ${activeClass} px-3.5 py-2 rounded-full text-xs font-semibold transition-colors flex-shrink-0">${cat}</button>`;
+                    html += `<button onclick="app.archiveManager.setCategory('${cat}')" class="px-3 py-1.5 rounded-full text-xs font-semibold flex-shrink-0 transition-colors ${isActive ? 'bg-slate-900 text-white' : 'bg-white border border-slate-200 text-slate-600'}">${cat}</button>`;
                 });
-
                 container.innerHTML = html;
             }
 
             setCategory(cat) {
                 this.currentCategory = cat;
-                this.renderCategoryPills();
                 this.renderNotes();
             }
 
@@ -668,14 +254,10 @@
                 if (!container) return;
 
                 let notes = this.db.getAllNotes();
-
-                if (this.currentCategory !== 'all') {
-                    notes = notes.filter(n => n.category === this.currentCategory);
-                }
-
+                if (this.currentCategory !== 'all') notes = notes.filter(n => n.category === this.currentCategory);
                 if (this.currentQuery) {
-                    notes = notes.filter(n => 
-                        n.title.toLowerCase().includes(this.currentQuery) || 
+                    notes = notes.filter(n =>
+                        n.title.toLowerCase().includes(this.currentQuery) ||
                         n.description.toLowerCase().includes(this.currentQuery) ||
                         n.subCategory.toLowerCase().includes(this.currentQuery) ||
                         n.category.toLowerCase().includes(this.currentQuery)
@@ -683,43 +265,33 @@
                 }
 
                 if (notes.length === 0) {
-                    container.innerHTML = `<div class="bg-white rounded-3xl p-8 text-center text-slate-400 text-xs border border-slate-100 shadow-sm">검색 결과나 선택된 카테고리에 해당하는 노트가 없습니다.</div>`;
+                    container.innerHTML = `<div class="bg-white rounded-2xl p-6 text-center text-slate-400 text-xs border border-slate-200">해당하는 노트가 없습니다.</div>`;
                     return;
                 }
 
-                let html = '';
-                notes.forEach(note => {
-                    let linksHtml = note.linkedNotes.map(l => `<span onclick="app.archiveManager.filterByLinkedNote('${l}')" class="cursor-pointer text-indigo-600 hover:underline bg-indigo-50 px-2.5 py-1 rounded-lg font-medium text-[11px]">🔗 [[${l}]]</span>`).join(' ');
-
-                    let videoHtml = note.hasVideo ? `
-                        <div class="video-container bg-slate-900 mt-3">
+                container.innerHTML = notes.map(note => {
+                    const linksHtml = note.linkedNotes.map(l => `<span onclick="app.archiveManager.filterByLinkedNote('${l}')" class="cursor-pointer text-slate-600 hover:text-slate-900 hover:underline text-[11px]">#${l}</span>`).join(' ');
+                    const videoHtml = note.hasVideo ? `
+                        <div class="video-container bg-slate-900 mt-2.5">
                             <iframe src="https://www.youtube.com/embed/${note.youtubeId}" title="${note.title}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                         </div>
                     ` : '';
 
-                    html += `
-                        <div class="bg-white border border-slate-100 rounded-3xl p-5 shadow-sm space-y-2.5 transition-all hover:shadow-md">
-                            <div class="flex justify-between items-center text-xs">
-                                <div class="flex items-center gap-1.5">
-                                    <span class="font-semibold text-blue-600 bg-blue-50 px-2.5 py-1 rounded-full">${note.category}</span>
-                                    <span class="text-slate-300">/</span>
-                                    <span class="font-medium text-slate-700 bg-slate-100 px-2.5 py-1 rounded-full">${note.subCategory}</span>
-                                </div>
-                                <span class="text-slate-400 text-[11px]">${note.date}</span>
+                    return `
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 space-y-2">
+                            <div class="flex justify-between items-center text-[11px] text-slate-400">
+                                <span class="font-semibold text-slate-600">${note.category} · ${note.subCategory}</span>
+                                <span>${note.date}</span>
                             </div>
                             <div>
-                                <h3 class="text-sm font-bold text-slate-900 mb-1">${note.title}</h3>
-                                <p class="text-slate-500 text-xs leading-relaxed">${note.description}</p>
+                                <h3 class="text-sm font-bold text-slate-900">${note.title}</h3>
+                                <p class="text-slate-500 text-xs leading-relaxed mt-0.5">${note.description}</p>
                             </div>
                             ${videoHtml}
-                            <div class="flex flex-wrap gap-1.5 pt-2 items-center border-t border-slate-100 mt-2.5 pt-2.5 text-[11px]">
-                                <span class="text-slate-400 font-semibold mr-1">백링크:</span> ${linksHtml}
-                            </div>
+                            <div class="flex flex-wrap gap-2 pt-2 border-t border-slate-100">${linksHtml}</div>
                         </div>
                     `;
-                });
-
-                container.innerHTML = html;
+                }).join('');
             }
 
             filterByLinkedNote(noteName) {
@@ -735,44 +307,33 @@
             constructor() {
                 this.db = new KnowledgeDatabase();
                 this.archiveManager = new ArchiveManager(this.db);
-                this.wheelManager = new WheelManager(this.db, (categoryName) => {
-                    this.updateLatestNotification(categoryName);
-                });
                 this.currentLatestNoteId = null;
             }
 
             init() {
-                this.wheelManager.init();
                 this.archiveManager.renderNotes();
+                this.showLatestNote();
             }
 
-            switchPage(pageId) {
-                const sections = document.querySelectorAll('.page-section');
-                sections.forEach(sec => sec.classList.remove('active'));
-
-                const targetSection = document.getElementById('page-' + pageId);
-                if (targetSection) {
-                    targetSection.classList.add('active');
-                    window.scrollTo({ top: 0, behavior: 'smooth' });
-                }
-            }
-
-            updateLatestNotification(categoryName) {
-                const categoryNotes = this.db.getAllNotes().filter(n => n.category === categoryName);
-                const targetNote = categoryNotes.length > 0 ? categoryNotes[0] : this.db.getAllNotes()[0];
-                if (!targetNote) return;
+            showLatestNote() {
+                const notes = this.db.getAllNotes();
+                if (notes.length === 0) return;
+                const targetNote = notes[0];
 
                 this.currentLatestNoteId = targetNote.id;
-
-                document.getElementById('latest-card-header-title').innerText = `${categoryName} 카테고리 최신 노트`;
                 document.getElementById('latest-card-tag').innerText = targetNote.subCategory;
                 document.getElementById('latest-card-date').innerText = targetNote.date;
                 document.getElementById('latest-card-title').innerText = targetNote.title;
                 document.getElementById('latest-card-desc').innerText = targetNote.description;
-                document.getElementById('latest-card-thumb').src = targetNote.thumbnail;
+            }
 
-                const overlay = document.getElementById('latest-card-badge-overlay');
-                overlay.style.display = targetNote.hasVideo ? 'flex' : 'none';
+            switchPage(pageId) {
+                document.querySelectorAll('.page-section').forEach(sec => sec.classList.remove('active'));
+                const target = document.getElementById('page-' + pageId);
+                if (target) {
+                    target.classList.add('active');
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
             }
 
             goToLatestNote() {
@@ -782,7 +343,6 @@
 
                 this.switchPage('archive');
                 this.archiveManager.setCategory(targetNote.category);
-
                 const searchInput = document.getElementById('archive-search-input');
                 if (searchInput) {
                     searchInput.value = targetNote.title;
@@ -792,12 +352,12 @@
 
             showContactModal() {
                 const modalBox = document.createElement('div');
-                modalBox.className = 'fixed inset-0 bg-black/40 backdrop-blur-xs flex items-center justify-center p-5 z-50';
+                modalBox.className = 'fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center p-5 z-50';
                 modalBox.innerHTML = `
-                    <div class="bg-white rounded-3xl p-6 max-w-sm w-full space-y-4 shadow-xl text-center">
-                        <h3 class="font-bold text-lg text-slate-900">오픈채팅 안내</h3>
-                        <p class="text-xs text-slate-600 leading-relaxed"></p>
-                        <button onclick="this.closest('.fixed').remove()" class="w-full bg-slate-900 text-white py-3 rounded-2xl font-bold text-sm shadow-md">확인</button>
+                    <div class="bg-white rounded-2xl p-6 max-w-sm w-full space-y-4 text-center">
+                        <h3 class="font-bold text-base text-slate-900">연락 채널 안내</h3>
+                        <p class="text-xs text-slate-600 leading-relaxed">인스타그램 DM(@xxyun__bright)으로 편하게 질문 남겨주세요. 오픈채팅 링크는 준비되는 대로 이 페이지에 추가됩니다.</p>
+                        <button onclick="this.closest('.fixed').remove()" class="w-full bg-slate-900 text-white py-3 rounded-xl font-bold text-sm">확인</button>
                     </div>
                 `;
                 document.body.appendChild(modalBox);
@@ -805,9 +365,7 @@
         }
 
         const app = new TrainerApp();
-        window.onload = function() {
-            app.init();
-        };
+        window.onload = function() { app.init(); };
     </script>
 
 </body>
