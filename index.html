@@ -199,23 +199,23 @@
             });
         }
 
+        // notes.json은 GitHub Actions가 content/ 폴더(카테고리별 md 노트)를 스캔해 자동 생성합니다.
+        // scripts/build-notes.js 참고.
         class KnowledgeDatabase {
             constructor() {
-                this.notes = [
-                    { id: 1, category: "운동", subCategory: "하체근력", title: "하체 필수 보강 루틴 및 스쿼트 교정 가이드", date: "2026.09.12", description: "스쿼트와 런지 시 무릎 통증을 방지하고 엉덩이 타깃을 정확히 잡는 핵심 영상 가이드입니다.", hasVideo: true, youtubeId: "dQw4w9WgXcQ", linkedNotes: ["근육학", "해부학"] },
-                    { id: 2, category: "운동", subCategory: "상체근력", title: "벤치프레스 궤적 교정 및 어깨 안정성 확보", date: "2026.09.09", description: "견갑골 후인하강 유지와 전면 삼각골 부상 방지를 위한 상체 루틴 분석.", hasVideo: false, linkedNotes: ["해부학"] },
-                    { id: 3, category: "의학", subCategory: "재활의학", title: "슬개골 대퇴 증후군(PFPS)의 해부학적 이해", date: "2026.09.10", description: "무릎 전면부 통증의 원인과 대퇴사두근 및 고관절 외전근 강화 운동의 상관관계 분석.", hasVideo: false, linkedNotes: ["하체근력", "재활운동"] },
-                    { id: 4, category: "과학", subCategory: "생리학", title: "근비대를 위한 기계적 장력과 생체 역학", date: "2026.09.08", description: "근섬유 활성화를 결정하는 텐션과 가동 범위(ROM)에 관한 생리학적 고찰.", hasVideo: false, linkedNotes: ["운동", "하체근력"] },
-                    { id: 5, category: "언어", subCategory: "코칭스피치", title: "회원 소통을 위한 코칭 스피치 & 바디랭귀지", date: "2026.09.05", description: "초보자 회원에게 전문 용어를 직관적인 비유로 전달하는 트레이너 언어 습관.", hasVideo: false, linkedNotes: ["운동"] }
-                ];
+                this.notes = [];
+            }
+            async load() {
+                try {
+                    const res = await fetch('./notes.json', { cache: 'no-store' });
+                    this.notes = await res.json();
+                } catch (err) {
+                    console.error('notes.json을 불러오지 못했습니다.', err);
+                    this.notes = [];
+                }
             }
             getAllNotes() { return this.notes; }
             getCategories() { return [...new Set(this.notes.map(n => n.category))]; }
-            addNote(noteData) {
-                const newNote = { id: Date.now(), ...noteData };
-                this.notes.push(newNote);
-                return newNote;
-            }
         }
 
         class ArchiveManager {
@@ -310,7 +310,8 @@
                 this.currentLatestNoteId = null;
             }
 
-            init() {
+            async init() {
+                await this.db.load();
                 this.archiveManager.renderNotes();
                 this.showLatestNote();
             }
