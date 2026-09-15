@@ -125,8 +125,9 @@
     <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200/80">
         <div class="max-w-xl mx-auto px-5 h-14 flex justify-between items-center">
             <a href="#" onclick="app.switchPage('main')" class="font-bold text-sm sm:text-base tracking-tight text-slate-900 flex items-center gap-2">
-                <span class="w-2.5 h-2.5 rounded-full bg-blue-600 ring-4 ring-blue-100"></span> buildup Kim's snowball
-            </a>
+            <!-- 기존 파란 동그라미 대신 favicon.png 이미지로 교체 (크기 및 레이아웃 유지) -->
+            <img src="./favicon.png" alt="Snowball Logo" class="w-5 h-5 rounded-full object-cover"> 
+            buildup Kim's snowball
             <nav class="flex gap-4 sm:gap-6 text-sm font-medium text-slate-600">
                 <button onclick="app.switchPage('blog')" id="nav-blog" class="hover:text-blue-600 transition-colors">블로그</button>
                 <button onclick="app.switchPage('archive')" id="nav-archive" class="hover:text-blue-600 transition-colors">아카이브</button>
